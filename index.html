@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM 上下文工程：F 函数专家全景图 v6.0</title>
+    <title>LLM 上下文工程：F 函数专家全景图 v7.0</title>
     <!-- 核心依赖 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
-
+        
         :root {
             --brand-primary: #2563eb;
             --bg-main: #f8fafc;
         }
 
-        body {
+        body { 
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-main);
             color: #1e293b;
@@ -41,10 +41,9 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             font-size: 1rem;
             line-height: 1.6;
-            color: #1e3a8a; /* 深蓝色增强公式可读性 */
+            color: #1e3a8a; 
         }
 
-        /* 专门处理 AI 生成的代码展示 */
         .ai-code-block {
             background: #1e293b;
             color: #e2e8f0;
@@ -55,6 +54,13 @@
             margin: 1rem 0;
             overflow-x: auto;
             border-left: 4px solid #8b5cf6;
+        }
+
+        /* 示例板块特殊样式 */
+        .example-block {
+            background-image: repeating-linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 75%, #f8fafc 75%, #f8fafc), repeating-linear-gradient(45deg, #f8fafc 25%, #ffffff 25%, #ffffff 75%, #f8fafc 75%, #f8fafc);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
         }
 
         .strategy-item.active {
@@ -82,7 +88,7 @@
 <body class="antialiased view-list">
 
     <div class="flex h-screen overflow-hidden">
-
+        
         <!-- 左侧侧边栏 -->
         <aside id="strategy-list-container" class="w-full lg:w-[320px] xl:w-[380px] flex-shrink-0 border-r border-slate-200 bg-white flex flex-col z-20">
             <div class="p-6 border-b border-slate-100">
@@ -92,10 +98,10 @@
                     </div>
                     <div>
                         <h1 class="text-base font-bold text-slate-900 leading-tight">上下文工程实验室</h1>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest italic">v6.0 Content First Edition</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest italic">v7.0 Examples Edition</p>
                     </div>
                 </div>
-
+                
                 <nav class="flex space-x-1 p-1 bg-slate-100 rounded-xl" id="category-filter">
                     <button onclick="filterGroup('all')" class="flex-1 text-[10px] font-bold py-2 rounded-lg bg-white shadow-sm text-blue-600 transition-all">全部</button>
                     <button onclick="filterGroup('compress')" class="flex-1 text-[10px] font-bold py-2 rounded-lg text-slate-500 hover:text-slate-700 transition-all">压缩型</button>
@@ -160,10 +166,11 @@
 
                 <!-- 核心重构：8:4 左右分栏布局 -->
                 <div class="grid lg:grid-cols-12 gap-8 items-start mb-12">
-
-                    <!-- 左侧主视觉：深度实现机制与优缺点 (占据更大宽度) -->
+                    
+                    <!-- 左侧主视觉：深度实现机制、示例与优缺点 -->
                     <div class="lg:col-span-8 space-y-6">
-                        <!-- 实现机制 (通栏大卡片) -->
+                        
+                        <!-- 实现机制 -->
                         <div class="p-6 md:p-8 bg-white rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
                             <h3 class="flex items-center text-lg font-bold text-slate-800 mb-4">
@@ -172,47 +179,53 @@
                             <p id="item-mech-core" class="text-[15px] text-slate-600 leading-relaxed"></p>
                         </div>
 
+                        <!-- 💡 直观示例板块 (新增) -->
+                        <div class="p-6 md:p-8 rounded-2xl border border-amber-200 shadow-inner relative overflow-hidden example-block">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-amber-400"></div>
+                            <h3 class="flex items-center text-base font-bold text-amber-900 mb-3">
+                                <span class="bg-amber-100 text-amber-600 p-1.5 rounded-lg mr-3">💡</span> 直观示例
+                            </h3>
+                            <div id="item-example" class="text-[14px] text-slate-700 leading-relaxed mono whitespace-pre-wrap bg-white/70 p-4 rounded-xl border border-amber-100">
+                                <!-- 示例内容 -->
+                            </div>
+                        </div>
+
                         <!-- 优缺点对比 (双列布局) -->
                         <div class="grid md:grid-cols-2 gap-6">
-                            <!-- 优点 -->
                             <div class="p-6 bg-white rounded-2xl border border-emerald-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
                                 <h3 class="flex items-center text-base font-bold text-slate-800 mb-3">
                                     <span class="bg-emerald-100 text-emerald-600 p-1.5 rounded-lg mr-2">✓</span> 核心优势
                                 </h3>
-                                <p id="item-mech-pros" class="text-sm text-slate-600 leading-relaxed"></p>
+                                <p id="item-mech-pros" class="text-[13px] text-slate-600 leading-relaxed"></p>
                             </div>
-                            <!-- 缺点 -->
                             <div class="p-6 bg-white rounded-2xl border border-rose-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 left-0 w-1.5 h-full bg-rose-500"></div>
                                 <h3 class="flex items-center text-base font-bold text-slate-800 mb-3">
                                     <span class="bg-rose-100 text-rose-600 p-1.5 rounded-lg mr-2">✕</span> 主要局限
                                 </h3>
-                                <p id="item-mech-cons" class="text-sm text-slate-600 leading-relaxed"></p>
+                                <p id="item-mech-cons" class="text-[13px] text-slate-600 leading-relaxed"></p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 右侧辅助视觉：评估与元数据 (变窄) -->
+                    <!-- 右侧辅助视觉：评估与元数据 -->
                     <div class="lg:col-span-4 space-y-6">
-                        <!-- 图表缩小作为辅助特征图 -->
                         <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
                             <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 text-center">能力特性指纹图</h4>
                             <div class="w-full" style="height: 220px; position: relative;">
                                 <canvas id="radarChart"></canvas>
                             </div>
                         </div>
-
-                        <!-- 专家点评 -->
+                        
                         <div class="p-5 bg-slate-900 rounded-2xl text-white shadow-lg relative overflow-hidden">
                             <div class="absolute -right-8 -top-8 w-24 h-24 bg-blue-500 opacity-20 blur-2xl rounded-full"></div>
                             <h5 class="text-xs font-bold text-blue-400 mb-3 flex items-center">
                                 <span class="mr-2">💡</span> 专家点评
                             </h5>
-                            <p id="item-insight" class="text-sm text-slate-300 leading-relaxed font-medium italic relative z-10"></p>
+                            <p id="item-insight" class="text-[13px] text-slate-300 leading-relaxed font-medium italic relative z-10"></p>
                         </div>
 
-                        <!-- 典型使用者 -->
                         <div class="p-5 bg-white rounded-2xl border border-slate-200 border-dashed">
                             <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">典型框架 / 应用者</h4>
                             <div id="item-adopters" class="flex flex-wrap gap-2"></div>
@@ -231,8 +244,8 @@
                         <div>
                             <textarea id="ai-scenario-input" rows="4" class="w-full p-4 text-sm border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all mb-4 shadow-inner" placeholder="描述你的场景 (如：我想做一个能记住用户之前病历的医疗助手...)"></textarea>
                             <div class="flex gap-3">
-                                <button onclick="handleAiTask('recommend')" class="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-md">✨ 场景适配建议</button>
-                                <button onclick="handleAiTask('code')" class="flex-1 py-3 px-4 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all shadow-md">✨ 生成 Python 代码</button>
+                                <button onclick="handleAiTask('recommend')" class="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-bold rounded-xl transition-all shadow-md">✨ 场景适配建议</button>
+                                <button onclick="handleAiTask('code')" class="flex-1 py-3 px-4 bg-slate-800 hover:bg-slate-900 text-white text-[13px] font-bold rounded-xl transition-all shadow-md">✨ 生成 Python 代码</button>
                             </div>
                         </div>
 
@@ -254,7 +267,7 @@
     </div>
 
     <script>
-        const apiKey = "";
+        const apiKey = ""; 
         const groups = {
             basic: { name: '基础范式', items: ['full', 'sliding'] },
             compress: { name: '压缩型', items: ['rolling', 'summary-buffer', 'map-reduce', 'lingua', 'compaction'] },
@@ -267,8 +280,9 @@
                 id: 'full', group: 'basic', name: '全量缓冲 (Full Buffer)',
                 logic: String.raw`$for\quad t=1 \to T:\quad C_{t+1} = I_t | O_t | C_t$`,
                 mech_core: '这是最直观且不需要额外工程处理的方案。系统不会对历史输入进行任何过滤、摘要或裁剪。数据以原始字符流或 Token 流的形式，通过简单的字符串拼接直接追加到下一次请求的上下文（Context）中，通常直接加载至显存中的 KV Cache。模型能够看到对话自始至终的每一个标点符号。',
-                mech_pros: '提供最高级别的信息忠实度（100% Retained Information）。由于没有任何信息压缩，模型能够完美保留对话的微妙语境、用户的性格设定以及复杂的多步指令，不会产生因摘要带来的“幻觉”或细节丢失。',
-                mech_cons: '极其低效且不可持续。随着对话轮次增加，Token 消耗呈指数级攀升，推理成本极为高昂。更致命的是，很快就会触及大语言模型的物理上下文窗口上限（如 8k/32k/128k），导致请求直接被拒绝（OOM 或 Invalid Request）。',
+                example: `[用户]: 我叫张三。 (回合1)\n[AI]: 你好张三！\n...\n[用户]: 我喜欢的颜色是蓝色。 (回合50)\n\n系统发给 LLM 的 Prompt = [包含回合1到50的逐字逐句完整记录] + [当前问题]`,
+                mech_pros: '提供最高级别的信息忠实度。由于没有任何信息压缩，模型能够完美保留对话的微妙语境、用户的性格设定以及复杂的多步指令，不会产生因摘要带来的“幻觉”或细节丢失。',
+                mech_cons: '极其低效且不可持续。随着对话轮次增加，Token 消耗呈指数级攀升。很快就会触及大语言模型的物理上下文窗口上限（如 32k/128k），导致请求直接被拒绝（OOM）。',
                 adopters: ['Playground 基础测试', '单次任务脚本', '极短对话 Bot'],
                 insight: '不可用于生产长效 Agent，但它是衡量其他压缩/检索算法“信息损失率”的完美基准标尺。',
                 stats: [10, 1, 1, 1, 2]
@@ -276,9 +290,10 @@
             {
                 id: 'sliding', group: 'basic', name: '滑动窗口 (Sliding Window)',
                 logic: String.raw`$for\quad t=1 \to T:\quad C_{t+1} = \text{FIFO}(C, K)$`,
-                mech_core: '在内存中维护一个具有固定容量 $K$（按 Token 数量或对话轮次计算）的双端队列（Deque）。每次产生新的对话回合 $\{I_t, O_t\}$ 时，将其推入队列尾部；如果此时队列总容量超过 $K$，则严格按照“先进先出（FIFO）”原则，将队列头部（即最古老的对话）的数据直接丢弃。',
-                mech_pros: '工程实现极为简单，且能保证计算成本（Cost/Token）和响应延迟始终维持在一个稳定的可预测范围内。模型能够始终将注意力聚焦在当前正在讨论的话题上，非常适合快速的问答场景。',
-                mech_cons: '会导致严重的“瞬时失忆（Catastrophic Forgetting）”。一旦早期设定的重要背景约束（例如：“请用法语回答，并且不能超过50个字”）随着时间的推移滑出了窗口，模型将彻底忘记这些指令，表现出行为失控。',
+                mech_core: '在内存中维护一个具有固定容量 $K$（按 Token 数量或对话轮次计算）的双端队列。每次产生新的对话回合时，将其推入队列尾部；如果此时队列总容量超过 $K$，则严格按照“先进先出（FIFO）”原则，将队列头部（即最古老的对话）的数据直接丢弃。',
+                example: `设定 K=3 (只记最近3轮)。\n[回合1] 用户: 我叫小明。\n[回合2] 用户: 我今年18岁。\n[回合3] 用户: 我喜欢打篮球。\n[回合4] 用户: 明天天气如何？\n\n此时，[回合1] 被无情踢出内存。如果用户在回合5问：“我叫什么？”，AI 会回答：“抱歉，我不知道你的名字”。像只有七秒记忆的金鱼。`,
+                mech_pros: '工程实现极为简单，且能保证计算成本（Cost/Token）和响应延迟始终维持在一个稳定的可预测范围内。',
+                mech_cons: '会导致严重的“瞬时失忆（Catastrophic Forgetting）”。一旦早期设定的重要背景约束随着时间的推移滑出了窗口，模型将彻底忘记这些指令。',
                 adopters: ['LangChain BufferWindowMemory', 'LlamaIndex ChatMemoryBuffer'],
                 insight: '工业界最底层的兜底策略，在实际应用中，绝大多数框架会采用“System Message 置顶锁定 + 滑动窗口记录对话”的组合形态来规避核心指令丢失。',
                 stats: [8, 5, 2, 4, 3]
@@ -286,9 +301,10 @@
             {
                 id: 'rolling', group: 'compress', name: '滚动摘要 (Rolling Summary)',
                 logic: String.raw`$for\quad t=1 \to T:\quad C_{t+1} = \text{Summary}(C) | I | O$`,
-                mech_core: '引入了一个辅助的 LLM（通常是速度更快、成本更低的小模型）作为专职的“记录员”。每当对话积累到一定长度时，系统会在后台启动一个进程，让这个辅助 LLM 读取旧的上下文，并将其压缩成一段高度概括的叙述性文本（Summary）。在此后的对话中，原始的流水账会被这段摘要完全替换。',
-                mech_pros: '能够以极少量的 Token 记录极长时间跨度的对话主旨。让 Agent 仿佛拥有了长期的“剧情记忆”，能够理解当前对话处于整个交互生命周期的哪个阶段。',
-                mech_cons: '存在不可逆的“语义蒸发”。每次摘要都会丢失微观细节（如具体的数值、特定的名字、代码片段）。同时，由于每次达到阈值都需要额外调用 LLM 生成摘要，会引入额外的 API 费用和响应等待时间。',
+                mech_core: '引入了一个辅助的 LLM 作为专职的“记录员”。每当对话积累到一定长度时，系统会在后台启动一个进程，让这个辅助 LLM 读取旧的上下文，并将其压缩成一段高度概括的叙述性文本（Summary）。在此后的对话中，原始的流水账会被这段摘要完全替换。',
+                example: `对话1-10轮后，后台触发摘要：\n“用户和AI讨论了Python编程，用户表示对爬虫感兴趣，AI提供了一个requests库的基础示例。”\n\n回合11发给 LLM 的 Prompt = [系统提示] + [上述那段几十字的摘要] + [回合11的最新问题]`,
+                mech_pros: '能够以极少量的 Token 记录极长时间跨度的对话主旨。让 Agent 仿佛拥有了长期的“剧情记忆”。',
+                mech_cons: '存在不可逆的“语义蒸发”。每次摘要都会丢失微观细节（如具体的数值、特定的代码片段）。同时，额外生成摘要会引入 API 费用和响应等待时间。',
                 adopters: ['LangChain ConversationSummaryMemory'],
                 insight: '更适合陪伴型 AI 或剧情类角色扮演应用，在需要严密逻辑追踪或代码编写的场景下是灾难性的。',
                 stats: [6, 7, 5, 8, 4]
@@ -296,9 +312,10 @@
             {
                 id: 'summary-buffer', group: 'compress', name: '混合缓冲摘要 (Summary Buffer)',
                 logic: String.raw`$C_{t+1} = \text{Summ}(C_{old}) \oplus C_{recent}$`,
-                mech_core: '这是一种分层架构的折中方案。内存被划分为两部分：一个保留最近 $K$ 轮原始对话的“热缓冲区”（Buffer），以及一个存储历史摘要的“冷存储区”。当热缓冲区满了之后，系统并非直接丢弃最老的数据，而是将最老的几轮对话“送入”冷存储区进行摘要合并。传给 LLM 的最终 Prompt 总是：历史摘要 + 最近原声对话。',
-                mech_pros: '极其聪明地平衡了“微观准确性”与“宏观记忆度”。用户当前的提问（需要结合刚才说过的细节）能得到精准响应，同时就算提问很久之前聊过的主题，模型也能通过前置摘要进行合理推断。',
-                mech_cons: '架构逻辑相对复杂，需要精细调优触发摘要的阈值。此外，如果用户的话题跳跃性太大，从“热缓冲”转移到“冷摘要”的过程可能会产生上下文割裂感。',
+                mech_core: '分层架构的折中方案。内存划分为：保留最近 $K$ 轮原始对话的“热缓冲区”，以及存储历史摘要的“冷存储区”。热缓冲区满了之后，系统将最老的几轮对话“送入”冷存储区进行摘要合并。传给 LLM 的最终 Prompt 总是：历史摘要 + 最近原声对话。',
+                example: `发给 LLM 的最终结构：\n【历史摘要】用户是一名程序员，正在开发一个外卖App，之前遇到了数据库死锁问题已解决。\n【近期原文1】用户: 现在帮我写一段订单超时的倒计时 UI。\n【近期原文2】AI: 好的，用 React 还是 Vue？\n【当前】用户: 用 React Hooks 吧。`,
+                mech_pros: '极其聪明地平衡了“微观准确性”与“宏观记忆度”。用户当前的提问能得到精准响应，提问很久之前聊过的主题，模型也能通过前置摘要进行合理推断。',
+                mech_cons: '架构逻辑相对复杂，需要精细调优触发摘要的阈值。从“热缓冲”转移到“冷摘要”的过程可能会产生上下文割裂感。',
                 adopters: ['Dify 默认记忆引擎', 'LangChain SummaryBufferMemory'],
                 insight: '这是当前生产级 Agent 架构中最推荐的默认、通用型上下文管理方案。',
                 stats: [9, 6, 6, 7, 5]
@@ -306,9 +323,10 @@
             {
                 id: 'map-reduce', group: 'compress', name: 'Map-Reduce 压缩',
                 logic: String.raw`$C = \text{Reduce}(\bigcup \text{Map}(S_i))$`,
-                mech_core: '借用了大数据的分布式处理思想。面对超长（百万级 Token）的历史记录，系统首先将其分割成多个可以在单一窗口内处理的块（Chunks）。在 Map 阶段，并行调用 LLM 针对每个块提取局部关键信息；在 Reduce 阶段，将这些局部提取物聚合在一起，再次使用 LLM 进行精炼和去重，最终合成全局上下文。',
-                mech_pros: '彻底打破了单一模型上下文窗口的硬性限制，理论上可以处理任意长度的文本输入，非常适合用来让 Agent “阅读”长达数百页的 PDF 报告或多年的对话归档。',
-                mech_cons: '处理过程极其耗时且消耗巨大的 Token。更为严重的是，由于分块是物理层面的切断，会导致长文本的时序逻辑和因果关系发生断层（跨块的信息很难被正确建立关联）。',
+                mech_core: '借用了大数据的分布式处理思想。面对超长（百万级 Token）的历史记录，系统首先将其分割成多个可以在单一窗口内处理的块。在 Map 阶段，并行调用 LLM 针对每个块提取局部关键信息；在 Reduce 阶段，将这些局部提取物聚合在一起，再次使用 LLM 进行精炼合成。',
+                example: `输入: 一本 100 页的电子书或一年份的聊天记录。\n动作1 (Map): 拆分成 10 份，每份 10 页。让 LLM 并行生成 10 个独立的小结。\n动作2 (Reduce): 把这 10 个小结拼在一起，让 LLM 再次总结出一份最终的全局执行报告。`,
+                mech_pros: '彻底打破了单一模型上下文窗口的硬性限制，理论上可以处理任意长度的文本输入。',
+                mech_cons: '处理过程极其耗时且消耗巨大的 Token。更为严重的是，由于分块是物理层面的切断，会导致长文本的时序逻辑和因果关系发生断层。',
                 adopters: ['LangChain MapReduceDocumentsChain'],
                 insight: '属于离线预处理工具，而不是面向实时高频交互（Chat）的记忆方案。',
                 stats: [7, 8, 7, 9, 6]
@@ -316,9 +334,10 @@
             {
                 id: 'rag', group: 'arch', name: '向量检索记忆 (Vector RAG)',
                 logic: String.raw`$P_{t+1} = \text{Retrieve}(I_t, \text{VecDB}) \cup I_t$`,
-                mech_core: '将每一轮（或每几轮）的对话记录使用 Embedding 模型转化为高维语义向量，并存储在专门的向量数据库（如 Milvus, Qdrant）中。当系统收到用户的新输入时，同样将其转化为向量，并在数据库中执行近邻搜索（KNN），召回相似度最高的 Top-K 历史片段，最后作为补充知识注入到当次 Prompt 中。',
-                mech_pros: '实现了记忆容量与计算成本的完美脱钩。理论上存储容量无限大，且无论累积了多少年对话，检索的耗时都处于毫秒级。特别擅长“大海捞针”式的事实回溯。',
-                mech_cons: '“语义相似”并不等同于“逻辑相关”。如果用户说“对，就按你刚才说的办”，这种高度代词化的句子在向量空间中缺乏明确语义，导致根本无法召回正确的历史建议，引发业务逻辑彻底断裂。',
+                mech_core: '将每一轮（或每几轮）的对话记录转化为高维语义向量，并存储在专门的向量数据库中。当系统收到新输入时，同样将其转化为向量，并在数据库中执行近邻搜索（KNN），召回相似度最高的 Top-K 历史片段注入到当次 Prompt 中。',
+                example: `用户当前提问：“我的宠物叫什么？”\n系统不把整年对话发给 LLM，而是将问题向量化去库里搜，捞出半年前的一句记录：“我今天买了一只金毛，取名叫旺财”。\nPrompt组合：“根据历史记录[买金毛叫旺财]，回答：我的宠物叫什么？”`,
+                mech_pros: '实现了记忆容量与计算成本的完美脱钩。理论上存储容量无限大，且检索的耗时都处于毫秒级。',
+                mech_cons: '“语义相似”并不等同于“逻辑相关”。如果用户说“对，就按你刚才说的办”，这种代词化的句子在向量空间中缺乏明确语义，导致根本无法召回正确的建议。',
                 adopters: ['MemGPT', 'Zep', 'LangChain VectorStoreMemory'],
                 insight: '单纯的 RAG 无法作为完备的对话记忆，必须结合多轮查询改写（Query Rewrite）和重排（Rerank）机制才能勉强可用。',
                 stats: [6, 4, 7, 10, 5]
@@ -326,9 +345,10 @@
             {
                 id: 'lingua', group: 'compress', name: '语义剪枝 (LLMLingua)',
                 logic: String.raw`$C_{t+1} = \text{Prune}(C_t, \text{PPL})$`,
-                mech_core: '这是一项非黑盒的算法工程。利用一个极小的局部语言模型（如 LLaMA-7B 等）来评估长上下文中每一个 Token 的困惑度（Perplexity/信息熵）。系统会自动移除那些“容易被猜到、冗余度高”的连词、助词甚至完整的废话句子，仅保留对下游任务预测最有价值的核心实体词，在 Token 级别进行高倍率“脱水”。',
-                mech_pros: '能够在极少损失逻辑准确性的前提下，将 Prompt 长度惊人地压缩 5 倍至 20 倍。这不仅解决了窗口溢出问题，更立竿见影地削减了调用 GPT-4 这种昂贵 API 的成本，且极大加快了推理速度。',
+                mech_core: '非黑盒的算法工程。利用一个小语言模型来评估长上下文中每一个 Token 的信息熵。系统会自动移除那些“容易被猜到、冗余度高”的连词、助词甚至完整的废话句子，仅保留对下游任务预测最有价值的核心实体词，在 Token 级别进行高倍率“脱水”。',
+                mech_pros: '能够在极少损失逻辑准确性的前提下，将 Prompt 长度惊人地压缩 5 倍至 20 倍。显著削减了 API 账单成本。',
                 mech_cons: '“脱水”后的文本人类几乎无法正常阅读，语法支离破碎。此外，它会彻底破坏原始对话的情感色彩和特定人物的口癖设定。',
+                example: `原文：“我认为你现在绝对应该立刻去超市买点苹果。”\n压缩后发给大模型的黑客语：“认为 绝对 应该 立刻 去 超市 买 苹果。”\n(去除了所有的修饰、代词和介词，但不影响 GPT 的理解)`,
                 adopters: ['Microsoft LLMLingua 优化器'],
                 insight: '极端硬核的工程榨汁机，多用于复杂 RAG 系统召回后的长上下文预处理。',
                 stats: [9, 3, 9, 6, 4]
@@ -336,8 +356,9 @@
             {
                 id: 'compaction', group: 'compress', name: '语义权重压缩 (Semantic Compaction)',
                 logic: String.raw`$C = \text{Filter}(C, \text{Weights})$`,
-                mech_core: '预先在系统中定义一套结构化的价值权重体系。例如，将信息划分为“核心事实”、“用户决策指令”、“闲聊废话”三大类。在 F 函数的清洗过程中，系统利用分类器自动标记，随后按照权重降序排列，严格限制注入上下文的内容只包含对完成当前任务最有用的“高价值节点”。',
-                mech_pros: '赋予了 Agent 极高的任务聚焦度（Task-oriented）。它确保 AI 永远不会因为用户的漫无边际的闲扯而偏离主线流程（例如点餐机器人、订票助手）。',
+                mech_core: '预先在系统中定义一套结构化的价值权重体系。例如，将信息划分为“核心事实”、“用户决策指令”、“闲聊废话”三大类。在过滤时，严格限制注入上下文的内容只包含对完成当前任务最有用的“高价值节点”，剔除闲聊。',
+                example: `对话流：\n[用户]: 今天天气不错啊。(废话，丢弃)\n[用户]: 帮我订一张去北京的票。(指令，保留权重10)\n[AI]: 好的，什么时候去？\n[用户]: 哈哈你真聪明，明天早上吧。(半废话半指令，清洗后仅保留: [时间: 明天早上])`,
+                mech_pros: '赋予了 Agent 极高的任务聚焦度。确保 AI 永远不会因为漫无边际的闲扯而偏离主线流程（例如点餐机器人、订票助手）。',
                 mech_cons: 'AI 会显得极度刻板和缺乏人情味。因为剥离了闲聊，就剥离了人机交互中的情绪价值和自然语境延续性。',
                 adopters: ['OpenClaw', '深度任务型 Agent'],
                 insight: '专为效能设计的“冷酷无情”记忆法，是严肃商业应用中的一把利器。',
@@ -346,9 +367,10 @@
             {
                 id: 'offloading', group: 'arch', name: '外部文件卸载 (File Offloading)',
                 logic: String.raw`$C = \{ \text{Path} \} \cup I_t$`,
-                mech_core: '当 Agent 需要阅读庞大的代码仓库，或是通过工具调用输出了数十万行的 JSON 数据时，如果直接塞入上下文会立刻宕机。此方案会将这些庞然大物转储到操作系统的临时文件或云端 OSS 中，而在发送给大模型的 Prompt 里，仅仅留下一个类似于 `<ref>file:///tmp/data.json</ref>` 的引用路径占位符。',
-                mech_pros: '在物理层面上规避了 LLM Token 窗口的绝壁限制。让大模型系统具备了处理和生成无限大规模工程文件的理论可能。',
-                mech_cons: '牺牲了即时可用性，引入了极大的磁盘 I/O 延迟。它强依赖模型具有出色的工具调用（Function Calling）能力，因为模型必须自己决定何时调用“读取文件工具”去抓取文件内容片段。',
+                mech_core: '当 Agent 需要阅读庞大的代码仓库，或是输出了数十万行的 JSON 数据时，如果直接塞入上下文会立刻宕机。此方案会将这些内容转储到操作系统或云端，而在 Prompt 里仅仅留下一个文件路径或 URI 的占位符。',
+                example: `如果把一张 Excel 表格直接转成文本放进上下文，要花 10万 Token。\n采用卸载方案后，Prompt 里只有一行字：\n“用户上传了数据文件，存放于 <file_id: 8899>，如需分析请调用 Python 工具读取该文件。”\n占用：不到 20 个 Token。`,
+                mech_pros: '在物理层面上规避了 LLM Token 窗口的绝壁限制。让系统具备了处理和生成无限大规模工程文件的理论可能。',
+                mech_cons: '牺牲了即时可用性，引入了极大的磁盘 I/O 延迟。它强依赖模型具有出色的工具调用（Function Calling）能力，让模型自己决定何时去抓取文件。',
                 adopters: ['LangChain Deep Agents', 'Claude Artifacts 底层思想'],
                 insight: '这是将大模型真正向“操作系统（LLM as OS）”演进的必经之路——显存不够，硬盘来凑。',
                 stats: [10, 2, 6, 9, 8]
@@ -356,9 +378,10 @@
             {
                 id: 'reflexion', group: 'struct', name: '言语强化 (Reflexion)',
                 logic: String.raw`$M = M \cup \text{Analyze}(O, \text{Error})$`,
-                mech_core: '这是一种颠覆性的记忆流派。它的记忆库不存储“做过什么”，而是专门存储“做错了什么以及为什么错”。当 Agent 执行任务遭遇报错（如代码运行失败）时，它会触发自我反思链，生成一条经验总结（Heuristic）写入外部记忆。下一次执行相同任务时，这些“血泪教训”会被作为前置约束注入。',
-                mech_pros: '赋予了 AI 真正意义上的自我进化能力和元认知（Meta-cognition）。模型能够摆脱死循环，任务成功率会随着尝试（Trial-and-error）的次数显著提升。',
-                mech_cons: '极其昂贵。因为生成每一条反思记忆都需要启动一次或多次完整的 LLM 推理循环，导致背后的隐性 Token 开销成倍甚至几倍增加。',
+                mech_core: '这是一种颠覆性的记忆流派。它的记忆库不存储“做过什么”，而是专门存储“做错了什么以及为什么错”。当 Agent 执行任务遭遇报错时，它会触发自我反思链，生成一条经验总结写入外部记忆。下一次执行相同任务时，这些“教训”会被作为前置约束注入。',
+                example: `Agent 尝试写贪吃蛇游戏，运行报错：缺少 pygame。\nAgent 生成反思记录：“我总是忘记导入图形库。规则更新：下次写游戏代码前，第一行必须写 import pygame。”\n这条“规则”永久存入了它的性格记忆中。`,
+                mech_pros: '赋予了 AI 真正意义上的自我进化能力和元认知。模型能够摆脱死循环，任务成功率会随着尝试次数显著提升。',
+                mech_cons: '极其昂贵。因为生成每一条反思记忆都需要启动一次完整的 LLM 推理循环，导致背后的隐性 Token 开销成倍增加。',
                 adopters: ['Reflexion Agent', 'AutoGPT 迭代演进版'],
                 insight: '最接近人类成长学习机制的工程范式，是用算力换取智能高度的典型代表。',
                 stats: [9, 9, 9, 5, 8]
@@ -366,8 +389,9 @@
             {
                 id: 'fact', group: 'struct', name: '事实提取 (Fact Extraction)',
                 logic: String.raw`$M = \text{Extract}(I, O) \to \text{JSON}$`,
-                mech_core: '在后台挂载一个极度敏锐的信息提取器（Extractor）。当用户说“我今天又失眠了，可能因为我是金牛座吧”，系统会立即抽取实体和属性，将其转化为高度结构化的字典（如 `{"user_name": "unknown", "astrology": "Taurus", "health_issues": ["insomnia"]}`），并更新到用户的长期配置库中。下一次对话时，直接将这个 JSON 对象序列化注入。',
-                mech_pros: '实现了最高级别的数据确定性和可操控性。极其节省上下文空间，且这些结构化数据可以直接与其他传统 IT 业务系统（如 CRM、推荐算法引擎）无缝对接。',
+                mech_core: '在后台挂载一个信息提取器。当用户说话时，系统立即抽取实体和属性，将其转化为高度结构化的字典，并更新到用户的长期配置库中。下一次对话时，直接将这个 JSON 对象序列化注入，抛弃原始文字。',
+                example: `用户发了一大段牢骚：“我今天又对花生过敏起疹子了，心情很烦，可能因为我是金牛座吧，好想吃肯德基。”\n后台提取并覆盖 DB 记录：\n{\n  "allergies": ["peanut"],\n  "zodiac": "Taurus",\n  "preferences": ["KFC"]\n}`,
+                mech_pros: '实现了最高级别的数据确定性和可操控性。极其节省上下文空间，且这些结构化数据可以直接与其他传统 IT 业务系统（如 CRM）无缝对接。',
                 mech_cons: '对话过程中那些无法被映射到预定义结构里的模糊情感、玩笑和非显性暗示会被无情过滤和舍弃。',
                 adopters: ['LlamaIndex EntityMemory', '各类 CRM 赋能 Agent'],
                 insight: '打造高粘性、个性化 AI 伴侣或专业私人助理（如健康顾问）的杀手级技术底座。',
@@ -376,9 +400,10 @@
             {
                 id: 'hierarchical', group: 'arch', name: '分层记忆架构 (Hierarchical Memory)',
                 logic: String.raw`$P \in \{L1, L2, L3\}$`,
-                mech_core: '直接对标冯·诺依曼计算机体系结构。构建了工作区（L1 Cache，当前轮次）、近期记忆（L2 RAM，滑动窗口）、长期存储（L3 Disk，向量或关系型数据库）。更重要的是，它通过赋予 LLM `core_memory_append`, `archival_memory_search` 等工具，让模型自己决定何时把什么数据换入换出显存。',
-                mech_pros: '目前人类已知的最完善的长期记忆管理架构。完美解决了大模型长期运行时的状态崩溃问题，能够支撑 Agent 以“月”甚至“年”为单位不间断地生活在沙盒中。',
-                mech_cons: '系统的工程开发与长期维护成本极高，架构极度复杂。并且，频繁的自我记忆管理调度也会占据大量模型思考带宽。',
+                mech_core: '直接对标计算机体系结构。构建了工作区（L1 Cache，当前轮次）、近期记忆（L2 RAM，滑动窗口）、长期存储（L3 Disk，数据库）。它通过赋予 LLM 工具，让模型自己决定何时把什么数据换入换出显存。',
+                example: `用户: “我不喜欢这个方案。”\nLLM 思考: “用户说不喜欢，但我工作区(L1)没记录什么方案。我需要调用 search_memory(L3) 查找他上周在聊什么。”\nLLM 将上周的“营销方案A”拉回到当前上下文中，然后回答：“您是指上周那个中秋营销方案吗？”`,
+                mech_pros: '目前已知的最完善的长期记忆管理架构。完美解决了大模型长期运行时的状态崩溃问题，能够支撑 Agent 以“月”为单位生活在沙盒中。',
+                mech_cons: '系统的工程开发与维护成本极高，架构极度复杂。并且，频繁的自我记忆管理调度也会占据大量模型思考带宽。',
                 adopters: ['MemGPT (Letta)', 'Zep OS'],
                 insight: '这是通往真正通用人工智能 Agent（自主数字生命）的底层基础设施大楼。',
                 stats: [9, 8, 10, 10, 7]
@@ -386,9 +411,10 @@
             {
                 id: 'scoped', group: 'arch', name: '上下文范围限制 (Scoped Memory)',
                 logic: String.raw`$C_i = \text{Scope}(C, \text{Role}_i)$`,
-                mech_core: '专为多角色 Multi-Agent 协作设计。在一个群聊或工作流中，并非所有人都需要知道所有细节。F 函数此时充当“过滤器”，为前端工程师 Agent 只截取需求文档和 UI 讨论的历史，而剔除后端架构师 Agent 讨论数据库优化的漫长对话流。',
-                mech_pros: '通过信息隔离（Information Hiding），大幅降低了单个 Agent 的认知负担，显著减少了“幻觉（Hallucination）”和角色扮演的混淆，同时节省了总体调用的成本。',
-                mech_cons: '如果过滤规则设计不佳，极易导致“信息孤岛（Information Silo）”。A 认为 B 应该知道某件事，但实际上这段上下文被拦截了，导致系统性协作瘫痪。',
+                mech_core: '专为 Multi-Agent 协作设计。在一个群聊工作流中，并非所有人都需要知道所有细节。F 函数此时充当“过滤器”，为不同角色的 Agent 剪裁出独立的上下文视图，仅包含与它职责相关的信息。',
+                example: `有三个 Agent：产品经理、前端开发、后端开发。\n当产品经理提出“按钮变蓝色”时，前端 Agent 的上下文里会立刻收到这条指令；而后端 Agent 的上下文里一片空白，完全不被这个 UI 相关的聊天打扰，继续专注写 API。`,
+                mech_pros: '通过信息隔离，大幅降低了单个 Agent 的认知负担，显著减少了“幻觉（Hallucination）”和角色扮演的混淆，节省总体 Token。',
+                mech_cons: '如果过滤规则设计不佳，极易导致“信息孤岛”。A 认为 B 应该知道某件事，但实际上这段上下文被拦截了，导致系统性协作瘫痪。',
                 adopters: ['CrewAI', 'AutoGen', 'Camel-AI 多智能体框架'],
                 insight: '在微服务化的人工智能团队中，隔离噪音比提供信息有时更为重要。',
                 stats: [8, 4, 6, 5, 6]
@@ -396,9 +422,10 @@
             {
                 id: 'kg', group: 'struct', name: '知识图谱索引 (KG Index)',
                 logic: String.raw`$C = \text{Query}(M, \text{Entity})$`,
-                mech_core: '利用深度 NLP 技术，将历史记录解析为节点（实体）和边（关系）构成的庞大网络。存储于 Neo4j 这样的图数据库中。查询时，不是比较语义相似度，而是顺着图的连线进行逻辑穿梭（Multi-hop Traversal），把沿途遇到的节点信息汇聚成解答线索。',
-                mech_pros: '具备远超一般 RAG 的因果推理能力。它能顺藤摸瓜回答“跨越多轮历史对话的、存在深度隐性逻辑联系”的复杂问题（例如：找出一个月前对话提到的 A 公司的法人的关联案件）。',
-                mech_cons: '知识图谱的提取和索引构建是一个计算噩梦，既缓慢又极其消耗算力。且对于口语化严重、缺乏明确主谓宾结构的日常闲聊适应性极差。',
+                mech_core: '将历史记录解析为节点（实体）和边（关系）构成的庞大网络，存储于图数据库中。查询时，顺着图的连线进行逻辑穿梭（Multi-hop Traversal），把沿途遇到的节点信息汇聚成解答线索，而非简单的字面量匹配。',
+                example: `三个月前的记录A：“张三和李四是隐婚夫妻。”\n一个月前的记录B：“李四开了家皮包公司叫星空科技。”\n当前问题：“张三有可能贪污把钱转去哪了？”\n系统在图谱中跳转：张三 -> (夫妻) -> 李四 -> (拥有) -> 星空科技。成功召回线索。`,
+                mech_pros: '具备远超一般 RAG 的因果推理能力。它能顺藤摸瓜回答“跨越多轮历史对话的、存在深度隐性逻辑联系”的复杂问题。',
+                mech_cons: '知识图谱的提取和索引构建是一个计算噩梦，既缓慢又消耗算力。且对于口语化严重、缺乏明确主谓宾结构的日常闲聊适应性差。',
                 adopters: ['GraphRAG (Microsoft)', 'LlamaIndex KnowledgeGraphIndex'],
                 insight: '记忆的终极形态不再是“检索”，而是“联想推理”。这是高端企业级洞察分析的圣杯。',
                 stats: [10, 7, 10, 8, 10]
@@ -438,11 +465,11 @@
             const input = document.getElementById('ai-scenario-input').value.trim();
             const loader = document.getElementById('ai-loading');
             const out = document.getElementById('ai-response-content');
-
+            
             loader.classList.remove('hidden');
             out.innerHTML = "";
 
-            const sp = type === 'recommend'
+            const sp = type === 'recommend' 
                 ? "你是一个极具洞察力的 LLM 架构专家，请基于选中的 F 函数深入剖析用户场景的适配度，提供痛点分析和避坑指南。排版清晰。"
                 : "你是一个 Python 架构师。请针对选中的 F 函数方案实现机制，生成一段简短、优雅且逻辑完整的 Python 伪代码或实现草图。务必使用 Markdown 代码块包裹。";
             const up = `选中底层逻辑：${selectedStrategy.name}\n运作原理概要：${selectedStrategy.mech_core}\n用户目标场景：${input || '提供通用的该策略最佳工程实践'}`;
@@ -457,12 +484,12 @@
             }
         }
 
-        function renderMath() {
+        function renderMath() { 
             if (window.renderMathInElement) {
-                renderMathInElement(document.body, {
+                renderMathInElement(document.body, { 
                     delimiters: [{left:'$$', right:'$$', display:true}, {left:'$', right:'$', display:false}],
                     throwOnError: false
-                });
+                }); 
             }
         }
 
@@ -506,7 +533,10 @@
             document.getElementById('item-id-tag').innerText = `ID: ${it.id.toUpperCase()}`;
             document.getElementById('item-category-tag').innerText = groups[it.group].name;
             document.getElementById('item-logic').innerText = it.logic;
+            
             document.getElementById('item-mech-core').innerText = it.mech_core;
+            document.getElementById('item-example').innerText = it.example; // 注入直观示例
+            
             document.getElementById('item-mech-pros').innerText = it.mech_pros;
             document.getElementById('item-mech-cons').innerText = it.mech_cons;
             document.getElementById('item-insight').innerText = it.insight;
@@ -530,7 +560,4 @@
         window.onload = () => { renderSidebar(); renderMath(); };
     </script>
 </body>
-
 </html>
-
-
